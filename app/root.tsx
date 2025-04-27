@@ -5,10 +5,14 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigation,
+  useNavigate,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import Countries from "~/context/Countries";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -19,11 +23,13 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap",
   },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const loading = useNavigation();
+  // @ts-ignore
   return (
     <html lang="en">
       <head>
@@ -33,7 +39,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        {loading.location && <>loading...</>}
+        <Countries>{children}</Countries>
         <ScrollRestoration />
         <Scripts />
       </body>

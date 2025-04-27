@@ -1,15 +1,229 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/forms";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+@utility bubble_scale {
+  &{
+    @apply relative  overflow-hidden;
+    span{
+      @apply z-[2] relative;
+    }
+  }
+
+  &:hover:after {
+    @apply scale-[5];
+  }
+
+  &:after {
+    content: "";
+    @apply aspect-square rounded-full w-[inherit] h-16 block absolute
+     transition-transform duration-500 scale-0 -ml-14;
+    transition-timing-function: cubic-bezier(0.5, -1, 0.2, 3);
+    background: var(--bg-color);
+    z-index: 1;
+  }
+}
+@layer base {
+  button, a [roles="button"] {
+    @apply cursor-pointer;
+  }
+}
+
+:root {
+  --bg-color: var(--color-red-500);
+  --bubble-scale: 5;
+}
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-white text-black overflow-x-hidden;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
+}
+
+input,textarea{
+  @apply form-input text-black focus:ring-red-500;
+  &:-webkit-autofill,&:-webkit-autofill{
+    @apply text-inherit! bg-inherit;
+  }
+}
+
+.navbar {
+  @apply flex items-center justify-between shadow sm:shadow-sm lg:shadow-xl px-3 py-2 bg-inherit;
+
+  nav {
+    @apply flex items-center gap-10;
+
+    a {
+      --bg-color: linear-gradient(
+        to right,
+        var(--color-gray-800),
+        var(--color-red-600)
+      );
+      @apply transition-all duration-500 ease-in-out font-semibold px-3 py-2 bubble_scale;
+
+
+      &:hover {
+        @apply text-white translate-y-1;
+      }
+    }
+    .login{
+      --bg-color:  linear-gradient(
+              to right,
+              var(--color-gray-800),
+              var(--color-red-600)
+      );
+      @apply px-3 py-2 bg-red-500 text-white bubble_scale;
+    }
+    .signup{
+      @apply border-2 border-red-500;
+    }
+  }
+}
+
+.cover {
+  @apply min-h-[500px] bg-red-500/10 flex justify-center items-center px-3;
+
+  & > div {
+    @apply max-w-lg;
+
+    h1 {
+      @apply text-7xl md:text-8xl font-black leading-tight;
+    }
+    P{
+      @apply font-medium;
+    }
+
+    div {
+      @apply flex gap-5 sm:gap-20 items-center mt-5 font-medium;
+
+      .docs {
+        --bg-color: linear-gradient(
+                to right,
+                var(--color-gray-800),
+                var(--color-red-600)
+        );
+        @apply px-3 py-2 bg-red-500 text-white bubble_scale;
+      }
+      .ex {
+
+        @apply px-3 py-2 border-2 border-red-500 hover:translate-y-1 transition-transform duration-500;
+      }
+    }
+  }
+}
+
+.Banner{
+  @apply bg-cover bg-blend-multiply min-h-[400px] text-white px-3 py-16 flex items-center justify-center items-center;
+
+  div{
+    @apply max-w-2xl flex flex-col gap-y-8;
+
+    h2{
+      @apply text-5xl md:text-7xl text-center font-bold;
+    }
+    .author {
+      @apply text-red-500 text-3xl;
+      font-family: "Mrs Saint Delafield", cursive;
+      font-weight: 400;
+      font-style: normal;
+
+    }
+  }
+
+
+
+
+  @media (min-width: theme(screens.lg)) {
+    @apply h-screen
+
+
+  }
+}
+
+.about{
+  @apply max-w-3xl bg-red-500/5 shadow px-3 sm:px-5 py-5 mx-auto my-16 flex flex-col gap-y-5;
+  h1{
+    @apply text-3xl md:text-5xl font-bold;
+  }
+  img{
+    @apply w-full h-auto max-w-full;
+  }
+}
+
+.not-found{
+  @apply flex flex-col gap-y-5 items-center text-3xl h-screen px-3 py-5;
+  img{
+    @apply max-w-xl;
+    filter: hue-rotate(330deg);
+  }
+  p{
+    @apply text-gray-400;
+  }
+}
+
+.form{
+  @apply flex flex-col gap-y-5 max-w-md mx-auto my-16 p-5 bg-gray-100 rounded-md border-2 border-red-500/5;
+
+  &>div:not(#countries){
+@apply flex flex-col gap-y-2 relative;
+
+    h1{
+      @apply text-4xl font-bold text-red-600;
+    }
+    span{ @apply text-sm font-medium; }
+    label{ @apply text-red-500; }
+
+    button{ @apply absolute right-3 bottom-2; }
+  }
+
+.phone{
+  button{@apply absolute left-0 w-max px-3 pr-2 py-1 flex items-center gap-1; }
+  input{@apply pl-26 w-full; }
+  }
+
+  &>button{
+    --bubble-scale: 15;
+    --bg-color: linear-gradient(
+            to right,
+            var(--color-gray-800),
+            var(--color-green-600)
+    );
+    @apply bg-black text-white font-semibold p-3 cursor-pointer bubble_scale;
+    span{@apply block w-full text-center;}
+  }
+
+  #countries{
+    @apply max-h-[500px] h-full flex flex-col gap-y-5 bg-white pb-5
+    rounded-md shadow-lg w-full max-w-xs sm:max-w-sm absolute md:ml-24 overflow-hidden;
+    h2{
+      @apply font-semibold text-xl px-5 bg-red-500/5 py-3 flex justify-between items-center;
+      svg{@apply text-red-500;}
+    }
+
+    &>div{ @apply flex flex-col gap-y-5 overflow-auto h-[inherit] px-5;
+
+      button{
+        @apply px-3 py-1 flex items-center gap-2 w-full;
+       &:is(.selected){@apply bg-gray-100 hover:border hover:border-b-gray-500}
+
+        span{ @apply text-gray-500;}
+
+        b{@apply font-semibold;}
+      }
+    }
+
+
+
+
+  }
+
+
+
 }

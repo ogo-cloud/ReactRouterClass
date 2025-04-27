@@ -1,5 +1,10 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import Header from "~/components/Header";
+import Cover from "~/components/Cover";
+import Banner from "~/components/Banner";
+import { Suspense, useEffect } from "react";
+import useCountries from "~/hooks/useCountries";
+import _ from "lodash";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,5 +14,15 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <Welcome />;
+  const countries = useCountries();
+  useEffect(() => {
+    console.log(countries);
+  }, []);
+  return (
+    <>
+      <Header />
+      <Cover />
+      <Banner />
+    </>
+  );
 }
