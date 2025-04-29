@@ -10,24 +10,26 @@ import {
 export default function Header() {
   const ref: RefObject<HTMLElement | null> = useRef<HTMLElement | null>(null);
   const [sticky, setSticky] = useState(false);
+
   useEffect(() => {
     if (ref.current) {
-      window.addEventListener("scroll", (ev) => {});
-      if (scrollY > 100) {
-        setSticky(true);
-      } else {
-        setSticky(false);
-      }
+      window.addEventListener("scroll", () => {
+        if (scrollY > 100) {
+          setSticky(true);
+        } else {
+          setSticky(false);
+        }
+      });
     }
   }, []);
-  // @ts-ignore
+
   return (
     <header
       ref={ref}
       className={sticky ? "top-0 z-50 w-full bg-white! fixed" : "bg-red-500/5"}
     >
       <div className={"navbar"}>
-        <a href={"#"}>
+        <a href="#">
           <img src={"/favicon.ico"} alt={"logo"} />
         </a>
 

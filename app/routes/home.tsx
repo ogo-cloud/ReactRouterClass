@@ -5,6 +5,7 @@ import Banner from "~/components/Banner";
 import { Suspense, useEffect } from "react";
 import useCountries from "~/hooks/useCountries";
 import _ from "lodash";
+import Slides from "~/components/Slides";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -23,6 +24,7 @@ export default function Home() {
       <Header />
       <Cover />
       <Banner />
+      <Slides />
     </>
   );
 }
